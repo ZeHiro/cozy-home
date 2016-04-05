@@ -14,7 +14,8 @@ module.exports =
         fs.exists filepath, (exists) ->
             if exists
                 stream = fs.createReadStream("#{filepath}")
-
+                res.set
+                    'Content-Type': 'text/plain'
                 # We remove color markers during the stream.
                 stream.on 'data', (data) ->
                     res.write data.toString().replace logs.colors, ''

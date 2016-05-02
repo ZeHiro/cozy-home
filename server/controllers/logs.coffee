@@ -10,7 +10,7 @@ module.exports =
     # It loads them from the folder /usr/local/var/log/cozy.
     logs: (req, res, next) ->
         filename = "#{req.params.moduleslug}.log"
-        filepath = logs.getLogPath moduleslug
+        filepath = logs.getLogPath req.params.moduleslug
 
         fs.exists filepath, (exists) ->
             if exists

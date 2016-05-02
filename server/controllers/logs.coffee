@@ -9,13 +9,15 @@ module.exports =
     # This controller pipes the log file corresponding to given app slug.
     # It loads them from the folder /usr/local/var/log/cozy.
     logs: (req, res, next) ->
-        filepath = logs.getLogPath req.params.moduleslug
+        filename = "#{req.params.moduleslug}.log"
+        filepath = logs.getLogPath moduleslug
 
         fs.exists filepath, (exists) ->
             if exists
                 stream = fs.createReadStream("#{filepath}")
                 res.set
                     'Content-Type': 'text/plain'
+                    'Content-disposition': "attachment; filename=#{filename}"
                 # We remove color markers during the stream.
                 stream.on 'data', (data) ->
                     res.write data.toString().replace logs.colors, ''

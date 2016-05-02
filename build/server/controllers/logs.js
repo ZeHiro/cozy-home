@@ -13,14 +13,16 @@ localizationManager = require('../helpers/localization_manager');
 
 module.exports = {
   logs: function(req, res, next) {
-    var filepath;
-    filepath = logs.getLogPath(req.params.moduleslug);
+    var filename, filepath;
+    filename = req.params.moduleslug + ".log";
+    filepath = logs.getLogPath(moduleslug);
     return fs.exists(filepath, function(exists) {
       var stream;
       if (exists) {
         stream = fs.createReadStream("" + filepath);
         res.set({
-          'Content-Type': 'text/plain'
+          'Content-Type': 'text/plain',
+          'Content-disposition': "attachment; filename=" + filename
         });
         stream.on('data', function(data) {
           return res.write(data.toString().replace(logs.colors, ''));

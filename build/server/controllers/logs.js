@@ -15,7 +15,7 @@ module.exports = {
   logs: function(req, res, next) {
     var filename, filepath;
     filename = req.params.moduleslug + ".log";
-    filepath = logs.getLogPath(moduleslug);
+    filepath = logs.getLogPath(req.params.moduleslug);
     return fs.exists(filepath, function(exists) {
       var stream;
       if (exists) {
